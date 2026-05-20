@@ -1,9 +1,10 @@
 # Le Bidul - Site Web
 
-Site web de l'agenda culturel Le Bidul, construit avec Django et Wagtail.
+Site web de l'agenda culturel Le Bidul, construit avec Django.
 
-## Architecture of Project
+## Architecture du projet
 
+```
 lebidul/
 ├── apps/
 │   ├── __init__.py
@@ -56,3 +57,11 @@ lebidul/
 ├── .gitignore
 ├── manage.py
 └── requirements.txt
+```
+
+## Groupes et permissions
+
+| Groupe | Droits |
+|---|---|
+| `Redacteur` | Créer et modifier des événements |
+| `Admin` (superuser) | Accès total |
