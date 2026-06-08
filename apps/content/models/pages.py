@@ -95,13 +95,6 @@ class LieuxIndexPage(Page):
     class Meta:
         verbose_name = "Index des Lieux"
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["lieux"] = (
-            LieuPage.objects.live().public().order_by("lieu__nom")
-        )
-        return context
-
 
 class ArticleIndexPage(Page):
     """Page d'index listant tous les articles."""
@@ -201,6 +194,13 @@ class BidulPage(Page):
     def get_url_parts(self, request=None):
         """URL personnalisée basée sur les données du Bidul."""
         return super().get_url_parts(request=request)
+        if site:
+            return (
+                site.id,
+                site.root_url,
+                f"/le-bidul-de-{self.bidul.mois}-{self.bidul.annee}-{self.bidul.numero}/",
+            )
+        return None
     
     @property
     def numero(self):
