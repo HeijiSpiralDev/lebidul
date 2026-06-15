@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-header__title">Annoncer un evenement</h1>
+        <p class="page-header__intro">Vous etes un groupe, un tourneur, un bar, une salle de concert, une association, etc. et souhaitez annoncer un evenement dans le Bidul, remplissez ce formulaire et vous serez publie dans la version papier et sur ce site. Pour rappel, Le Bidul publie <strong>uniquement</strong> les evenements qui ont lieu <strong>en Sarthe</strong>.</p>
+    </div>
+    {% if messages %}<div class="messages">{% for message in messages %}<div class="message message--{{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    <div class="form-container" style="max-width:700px;margin-bottom:80px">
+        <form method="post" novalidate>{% csrf_token %}
+            {% if form.non_field_errors %}<div style="background:#fee2e2;color:#991b1b;padding:12px 16px;border-radius:8px;margin-bottom:20px">{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>{% endif %}
+
+            <fieldset style="border:none;padding:0;margin:0 0 32px">
+                <legend style="font-family:var(--font-headings);font-size:1.2rem;font-weight:700;color:var(--color-secondary,#1D3557);margin-bottom:16px">Informations generales de l evenement</legend>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Email de contact *</label>
+                    {{ form.email_contact }}
+                    <small style="color:#888">Email a contacter en cas de question sur l evenement.</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Date *</label>
+                    {{ form.date_debut }}
+                    <small style="color:#888">Date de l evenement.</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">A quelle heure *</label>
+                    {{ form.heure_text }}
+                    <small style="color:#888">Heure du debut. Exemple : 20h30</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Lieu *</label>
+                    {{ form.lieu }}
+                    <small style="color:#888">Si le lieu ne fait pas partie de cette liste, signalez-le par mail a lebidul@live.fr</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Ville *</label>
+                    {{ form.ville }}
+                    <small style="color:#888">Ville ou village ou a lieu l evenement.</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Tarif *</label>
+                    {{ form.tarif }}
+                    <small style="color:#888">Exemples : 8 EUR, prix libre, au chapeau, 5 a 8 EUR</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">URL de l evenement</label>
+                    {{ form.url }}
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Festival ou Asso organisatrice (si pertinent)</label>
+                    {{ form.festival_nom }}
+                    <small style="color:#888">Nom de l evenement ou de l organisation. Exemples : Festival Bebop, Orga Cortex</small>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Style du festival</label>
+                    {{ form.festival_style }}
+                    <small style="color:#888">Sera affiche entre parentheses en italique. Exemple : festival de theatre de rue</small>
+                </div>
+            </fieldset>
+
+            <fieldset style="border:none;padding:0;margin:0 0 32px">
+                <legend style="font-family:var(--font-headings);font-size:1.2rem;font-weight:700;color:var(--color-secondary,#1D3557);margin-bottom:16px">Spectacle / Concert 1</legend>
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Concert ou Spectacle vivant ?</label>
+                    {{ form.genre_1 }}
+                </div>
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Nom de l artiste / groupe / compagnie</label>
+                    {{ form.artiste_1 }}
+                    <small style="color:#888">Sera affiche en capitales et gras pour les concerts.</small>
+                </div>
+                <div style="margin-bottom:16px">
+                    <label style="display:block;font-weight:600;margin-bottom:4px">Style</label>
+                    {{ form.style_1 }}
+                    <small style="color:#888">Sera affiche entre parentheses en italique. Exemples : theatre, post-punk</small>
+                </div>
+            </fieldset>
+
+            <fieldset style="border:none;padding:0;margin:0 0 32px">
+                <legend style="font-family:var(--font-headings);font-size:1.1rem;font-weight:700;color:var(--color-secondary,#1D3557);margin-bottom:16px">Spectacle / Concert 2 (optionnel)</legend>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Concert ou Spectacle vivant ?</label>{{ form.genre_2 }}</div>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Artiste / Groupe / Compagnie</label>{{ form.artiste_2 }}</div>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Style</label>{{ form.style_2 }}</div>
+            </fieldset>
+
+            <fieldset style="border:none;padding:0;margin:0 0 32px">
+                <legend style="font-family:var(--font-headings);font-size:1.1rem;font-weight:700;color:var(--color-secondary,#1D3557);margin-bottom:16px">Spectacle / Concert 3 (optionnel)</legend>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Concert ou Spectacle vivant ?</label>{{ form.genre_3 }}</div>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Artiste / Groupe / Compagnie</label>{{ form.artiste_3 }}</div>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Style</label>{{ form.style_3 }}</div>
+            </fieldset>
+
+            <fieldset style="border:none;padding:0;margin:0 0 32px">
+                <legend style="font-family:var(--font-headings);font-size:1.1rem;font-weight:700;color:var(--color-secondary,#1D3557);margin-bottom:16px">Spectacle / Concert 4 (optionnel)</legend>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Concert ou Spectacle vivant ?</label>{{ form.genre_4 }}</div>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Artiste / Groupe / Compagnie</label>{{ form.artiste_4 }}</div>
+                <div style="margin-bottom:16px"><label style="display:block;font-weight:600;margin-bottom:4px">Style</label>{{ form.style_4 }}</div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px">Envoyer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
