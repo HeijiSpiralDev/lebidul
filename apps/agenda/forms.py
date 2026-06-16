@@ -42,9 +42,8 @@ class EvenementForm(forms.ModelForm):
 
     class Meta:
         model = Evenement
-        fields = ['titre', 'date_debut', 'lieu', 'url']
+        fields = ['date_debut', 'lieu', 'url']
         widgets = {
-            'titre': forms.TextInput(attrs={'class': 'form-input'}),
             'date_debut': forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}),
             'url': forms.URLInput(attrs={'class': 'form-input', 'placeholder': 'https://...'}),
         }
@@ -54,6 +53,13 @@ class EvenementForm(forms.ModelForm):
         evt.statut = 'en_attente'
         evt.prix = self.cleaned_data.get('tarif', '')
         evt.description = self.cleaned_data.get('festival_nom', '')
+        # Générer le titre automatiquement
+        if not evt.titre:
+            artiste = self.cleaned_data.get('artiste_1', '')
+            festival = self.cleaned_data.get('festival_nom', '')
+            lieu = self.cleaned_data.get('lieu')
+            lieu_nom = lieu.nom if lieu else ''
+            evt.titre = artiste or festival or lieu_nom or 'Événement sans titre'
         if commit:
             evt.save()
         return evt
