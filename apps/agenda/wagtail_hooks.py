@@ -4,8 +4,10 @@ from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from django.db import models
 from .models.evenement import Evenement, EvenementViewSet
+from .models.snippets import GoogleSheetMensuel
 
 register_snippet(Evenement, viewset=EvenementViewSet)
+register_snippet(GoogleSheetMensuel)
 
 @register_setting(icon='form')
 class FormulaireSettings(BaseSiteSetting):
