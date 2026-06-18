@@ -13,6 +13,15 @@ def get_client(credentials_path):
     return gspread.service_account(filename=credentials_path)
 
 def get_or_create_sheet(client, folder_id, annee, mois, share_with=None):
+    # Verifie d'abord si une URL est configuree dans l'admin pour ce mois/annee
+    try:
+        from .models.snippets import GoogleSheetMensuel
+        config = GoogleSheetMensuel.objects.filter(annee=annee, mois=mois).first()
+        if config and config.url:
+            return client.open_by_url(config.url)
+    except Exception:
+        pass
+
     mois_str = MOIS_FR.get(mois, str(mois))
     sheet_name = f'{annee}{mois:02d}_tapage_biduleur_{mois_str}_{annee}'
     try:
